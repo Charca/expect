@@ -1,5 +1,7 @@
 /*eslint-env mocha */
+/*eslint-disable no-console */
 import expect from '../index'
+import isEqual from 'is-equal'
 
 describe('toInclude', function () {
   it('requires the actual value to be an array or string', function () {
@@ -27,8 +29,14 @@ describe('toInclude', function () {
     }).toThrow(/to include/)
   })
 
-  it('throws when an array does not contain an expected object', function () {
+  it.only('throws when an array does not contain an expected object', function () {
     expect(function () {
+      console.log(isEqual({ a: 1 }, { a: 2 }))
+      console.log(isEqual({ c: 2 }, { a: 2 }))
+      console.log(
+        [ { a: 1 }, { c: 2 } ].some(o => isEqual(o, { a: 2 }))
+      )
+
       expect([ { a: 1 }, { c: 2 } ]).toInclude({ a: 2 })
     }).toThrow(/to include/)
   })
